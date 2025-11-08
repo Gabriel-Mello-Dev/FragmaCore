@@ -52,7 +52,7 @@ const navigate= useNavigate();
         </header>
 
         {/* Conteúdo dinâmico (Outlet do React Router) */}
-        <main className="flex-1 overflow-y-auto p-8 min-w-screen" >
+        <main className="flex-1 overflow-y-auto p-8 min-w-[87vw]" >
           <Outlet />
         </main>
       </div>

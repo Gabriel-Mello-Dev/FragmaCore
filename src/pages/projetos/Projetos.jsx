@@ -7,8 +7,8 @@ const projetos = {
     slogan: "“Durma melhor, viva de forma mais inteligente, acorde revigorado.”",
     descricao: `
       O SLP - Sleep Like a Panda é uma aplicação web criada para ajudar
-      usuários a controlarem melhor seus horários de sono, com alarmes
-      interativos, relógio em tempo real e uma interface moderna feita em React.
+      usuários a controlarem melhor seus horários de sono, com alarmes interativos,
+      relógio em tempo real e uma interface moderna feita em React.
       O projeto foi desenvolvido com React, Vite, JavaScript, ESLint,
       Axios, Markdown e JSON, oferecendo uma experiência leve,
       fluida e de fácil manutenção.
@@ -23,26 +23,71 @@ const projetos = {
       "Gabriel de Oliveira Mello • Francisco Felipe da Silva • Celso Fischer Neto",
     link: "https://slp-sleep-like-a-panda.vercel.app/",
   },
+
   "Gabriel Mello": {
-    nome: "Projetos de Gabriel Mello",
-    descricao: "Projetos individuais em desenvolvimento...",
+    nome: "📂 HostDocs — Documentos & Certificados",
+    slogan: "“Centralize, organize e acesse seus documentos com facilidade.”",
+    descricao: `
+      O HostDocs é um sistema web desenvolvido para armazenar e
+      gerenciar documentos, relatórios e certificados de cursos de forma prática,
+      segura e acessível. Criado com foco em estudantes e profissionais que desejam
+      manter seu portfólio sempre organizado, o HostDocs oferece uma interface
+      limpa, moderna e intuitiva.
+      
+      Desenvolvido utilizando PHP para o back-end e integração com
+      banco de dados  MySQL , o sistema garante performance e
+      segurança. No front-end, o projeto utiliza Tailwind CSS
+      para uma experiência visual moderna e responsiva.
+    `,
+    features: [
+      "Upload e armazenamento seguro de documentos",
+      "Organização por categorias e tipos de arquivo",
+      "Busca rápida e filtragem dinâmica",
+      "Layout responsivo com Tailwind CSS",
+      "Banco de dados estruturado em MySQL",
+    ],
+    equipe: "Gabriel de Oliveira Mello",
+    link: "https://hostdocs.byethost17.com",
   },
+
   "Francisco Silva": {
     nome: "Projetos de Francisco Silva",
     descricao: "Projetos individuais em desenvolvimento...",
   },
+
   "Celso Fischer": {
-    nome: "Projetos de Celso Fischer",
-    descricao: "Projetos individuais em desenvolvimento...",
+    nome: "📂 HostDocs — Documentos & Certificados",
+    slogan: "“Centralize, organize e acesse seus documentos com facilidade.”",
+    descricao: `
+      O HostDocs é uma plataforma desenvolvida para facilitar o
+      armazenamento e acesso de documentos, certificados e relatórios acadêmicos
+      de forma simples e segura. Seu design limpo e intuitivo permite que o usuário
+      gerencie seu portfólio digital com rapidez e praticidade.
+      
+      Construído com PHP e MySQL, o sistema
+      possui uma arquitetura sólida e eficiente. A camada visual foi criada com
+      Tailwind CSS, garantindo uma interface moderna, adaptável
+      e leve.
+    `,
+    features: [
+      "Gerenciamento completo de documentos pessoais e acadêmicos",
+      "Sistema de autenticação e controle de acesso",
+      "Visual moderno e minimalista com Tailwind CSS",
+      "Integração com banco de dados MySQL",
+      "Hospedagem otimizada e gratuita",
+    ],
+    equipe: "Celso Fischer Neto",
+    link: "https://hostdocs.byethost17.com",
   },
 };
+
 
  function Projetos() {
   const [selecionado, setSelecionado] = useState("Equipe Inteira");
   const projeto = projetos[selecionado];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0D0D0D] via-[#151515] to-[#1E1E1E] p-8 text-[#E7E0D8] relative overflow-hidden">
+    <div className="min-h-screen p-8 text-[#E7E0D8] relative overflow-hidden">
       {/* Efeito decorativo de fundo rachado dourado */}
       <div className="absolute inset-0 opacity-10 bg-[url('/imgs/texture-cracked-gold.png')] bg-cover bg-center pointer-events-none" />
 
