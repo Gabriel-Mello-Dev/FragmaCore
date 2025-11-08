@@ -1,13 +1,10 @@
-import { Outlet, useNavigate } from "react-router-dom"
-import { Home, Code2, Cpu, Layers, Info } from "lucide-react"
+import { Outlet, useNavigate } from "react-router-dom";
+import { Home, Code2, Cpu, Layers, Info } from "lucide-react";
 import { NavLink } from "react-router-dom";
-
-
-
+import { Highlighter } from "../../components/ui/highlighter";
 
 function LayoutPadrao() {
-
-const navigate= useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen bg-gradient-to-b from-[#1C1C1C] to-[#0D0D0D] text-[#E7E0D8] relative overflow-hidden">
@@ -28,10 +25,17 @@ const navigate= useNavigate();
 
         <nav className="flex flex-col gap-4 w-full px-6">
           <NavItem icon={<Home size={18} />} label="Início" link="/" />
-          <NavItem icon={<Code2 size={18} />} label="Projetos" link="Projetos"  />
-          <NavItem icon={<Cpu size={18} />} label="Tecnologias" link="Tecnologias" />
-          <NavItem icon={<Layers size={18} />} label="Soluções" />
-          <NavItem icon={<Info size={18} />} label="Sobre" />
+          <NavItem
+            icon={<Code2 size={18} />}
+            label="Projetos"
+            link="Projetos"
+          />
+          <NavItem
+            icon={<Cpu size={18} />}
+            label="Tecnologias"
+            link="Tecnologias"
+          />
+          <NavItem icon={<Info size={18} />} label="Sobre" link="sobre" />
         </nav>
 
         <div className="mt-auto text-xs text-[#C8A951]/70">
@@ -44,20 +48,27 @@ const navigate= useNavigate();
         {/* Topbar */}
         <header className="bg-[#121212]/80 border-b border-[#D4AF37]/30 py-4 px-8 flex justify-between items-center shadow-sm backdrop-blur-md">
           <div>
-            <h1 className="text-[#D4AF37] font-semibold text-lg">Fragma Core</h1>
+            <h1 className="text-[#D4AF37] font-semibold text-lg">
+              Fragma Core
+            </h1>
             <p className="text-sm italic text-[#C8A951]">
-              Fragmentos que se unem, códigos que brilham como ouro.
+              Fragmentos que se unem
             </p>
+            <Highlighter action="highlight" color="#585858ff">
+<p className="text-sm italic bg-gradient-to-r from-[#D4AF37] via-[#FFF7D1] to-[#D4AF37] text-transparent bg-clip-text animate-shine">
+              , códigos que brilham como ouro.
+              </p>
+            </Highlighter>{" "}
           </div>
         </header>
 
         {/* Conteúdo dinâmico (Outlet do React Router) */}
-        <main className="flex-1 overflow-y-auto p-8 min-w-[87vw]" >
+        <main className="flex-1 overflow-y-auto p-8 min-w-[87vw]">
           <Outlet />
         </main>
       </div>
     </div>
-  )
+  );
 }
 
 function NavItem({ icon, label, link }) {
@@ -75,4 +86,4 @@ function NavItem({ icon, label, link }) {
   );
 }
 
-export { LayoutPadrao }
+export { LayoutPadrao };

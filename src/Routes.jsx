@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import {Home, Tech, Projetos} from "./pages";
+import {Home, Tech, Projetos, Sobre, Error} from "./pages";
 import {LayoutPadrao} from "./layout";
 
 function AppRoutes() {
@@ -10,9 +10,13 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/Tecnologias" element={<Tech />} />
         <Route path="/Projetos" element={<Projetos />} />
+        <Route path="/sobre" element={<Sobre />} />
         {/* Adicione outras rotas dentro do layout */}
         {/* <Route path="/sobre" element={<Sobre />} /> */}
       </Route>
+        <Route path="*" element={<Error />} />
+
+
     </Routes>
   );
 }

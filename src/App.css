@@ -10,6 +10,27 @@ h1 {
   text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
 
+@keyframes shine {
+  0% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 2px #d4af37) drop-shadow(0 0 4px #d4af37);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 0 6px #fff7d1) drop-shadow(0 0 10px #d4af37);
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 2px #d4af37) drop-shadow(0 0 4px #d4af37);
+  }
+}
+
+.animate-shine {
+  background-size: 200% auto;
+  animation: shine 3s linear infinite;
+}
+
+
 /* Efeito de rachaduras douradas — adicione uma textura */
 body {
   background-color: #1C1C1C;

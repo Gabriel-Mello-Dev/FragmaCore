@@ -97,18 +97,38 @@ const projetos = {
 
         {/* Select estilizado */}
         <div className="flex justify-center">
-          <select
-            value={selecionado}
-            onChange={(e) => setSelecionado(e.target.value)}
-            className="bg-[#1B1B1B]/60 border border-[#D4AF37]/40 text-[#E7E0D8]
-             px-6 py-3 rounded-xl focus:ring-2 focus:ring-[#D4AF37]/50
-             backdrop-blur-md cursor-pointer text-lg shadow-[0_0_10px_rgba(212,175,55,0.2)]"
-          >
-            <option>Gabriel Mello</option>
-            <option>Francisco Silva</option>
-            <option>Celso Fischer</option>
-            <option>Equipe Inteira</option>
-          </select>
+         <select
+  value={selecionado}
+  onChange={(e) => setSelecionado(e.target.value)}
+  className="
+    relative w-full max-w-xs 
+    appearance-none 
+    bg-gradient-to-br from-[#111]/90 to-[#1B1B1B]/90 
+    border border-[#D4AF37]/40
+    text-[#F5E6C4] font-semibold tracking-wide
+    px-6 py-3 rounded-2xl
+    focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/60
+    cursor-pointer
+    shadow-[0_0_20px_rgba(212,175,55,0.15)]
+    backdrop-blur-md transition-all duration-300
+    hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] hover:border-[#D4AF37]/80
+    [text-shadow:_0_0_8px_rgba(212,175,55,0.3)]
+  "
+  style={{
+    fontFamily: '"Cinzel Decorative", serif',
+    backgroundImage:
+      'linear-gradient(145deg, rgba(30,30,30,0.95), rgba(10,10,10,0.9))',
+  }}
+>
+  <option className="bg-[#0F0F0F] text-[#D4AF37]/90 font-medium">
+    Equipe Inteira
+  </option>
+
+  <option className="bg-[#0F0F0F] text-[#E7E0D8]">Francisco Silva</option>
+  <option className="bg-[#0F0F0F] text-[#E7E0D8]">Celso Fischer</option>
+  <option className="bg-[#0F0F0F] text-[#E7E0D8]"> Gabriel Mello</option>
+</select>
+
         </div>
 
         {/* Conteúdo do projeto */}
