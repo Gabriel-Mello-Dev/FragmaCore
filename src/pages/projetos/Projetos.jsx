@@ -20,16 +20,24 @@ const projetos = {
     equipe: "Gabriel de Oliveira Mello",
     link: "https://adaptil.vercel.app/",
   },
+  Dashboard: {
+    nome: "Dashboard de Monitoramento Logístico",
+    descricao:
+      "Dashboard desenvolvido para análise e monitoramento de operações logísticas, permitindo visualizar indicadores de desempenho, acompanhar KPIs e explorar os dados por meio de filtros interativos.",
+    tecnologias: ["Next.js", "React", "Dashboard", "Análise de Dados"],
+    equipe: "Gabriel de Oliveira Mello",
+    link: "https://fragmacore-dashboard.vercel.app/",
+  },
 };
 
 function Projetos() {
   const [selecionado, setSelecionado] = useState("Sleep Like a Panda");
-  
 
   const projeto = projetos[selecionado];
 
   return (
-<main className="min-h-full w-full bg-[#171717] text-[#E7E0D8] relative">      {" "}
+    <main className="min-h-full w-full bg-[#171717] text-[#E7E0D8] relative">
+      {" "}
       {/* Fundo */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[#151515] to-[#0D0D0D]" />
@@ -43,7 +51,9 @@ function Projetos() {
           }}
         />
       </div>
-<div className="relative z-10 w-full min-h-full px-6 py-10 md:px-10 md:py-12">        <div className="w-full max-w-6xl mx-auto space-y-10">
+      <div className="relative z-10 w-full min-h-full px-6 py-10 md:px-10 md:py-12">
+        {" "}
+        <div className="w-full max-w-6xl mx-auto space-y-10">
           {/* Título */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -99,6 +109,8 @@ function Projetos() {
               <option value="Sleep Like a Panda">Sleep Like a Panda</option>
 
               <option value="Adaptil">Adaptil</option>
+
+              <option value="Dashboard">DashBoard Logistico</option>
             </select>
           </motion.div>
 
