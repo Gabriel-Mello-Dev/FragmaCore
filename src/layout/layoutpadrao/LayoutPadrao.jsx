@@ -3,101 +3,122 @@ import { Home, Code2, Cpu, Info } from "lucide-react";
 
 function LayoutPadrao() {
   return (
-    <div className="flex h-screen w-full bg-[#171717] text-[#F2EEE8] overflow-hidden">
-      {/* Sidebar */}
-      <aside className="hidden md:flex w-64 shrink-0 bg-[#1D1D1D] border-r border-white/[0.08] flex-col">
-        {/* Logo */}
-        <div className="px-7 pt-8 pb-8">
-          <div className="flex items-center gap-3">
-            <img
-              src="/imgs/logo.png"
-              alt="Fragma Core"
-              className="w-10 h-10 object-contain"
-            />
+    <div className="min-h-[100dvh] w-full bg-[#171717] text-[#F2EEE8]">
 
-            <div>
-              <h1 className="text-base font-semibold tracking-wide text-[#F2EEE8]">
-                Fragma Core
-              </h1>
+      {/* Layout principal */}
+      <div className="flex min-h-[100dvh] w-full">
 
-              <p className="text-xs text-[#A8A29A] mt-1">Desenvolvimento Web</p>
+        {/* Sidebar */}
+        <aside className="hidden md:flex w-64 shrink-0 bg-[#1D1D1D] border-r border-white/[0.08] flex-col">
+
+          {/* Logo */}
+          <div className="px-7 pt-8 pb-8">
+            <div className="flex items-center gap-3">
+              <img
+                src="/imgs/logo.png"
+                alt="Fragma Core"
+                className="w-10 h-10 object-contain"
+              />
+
+              <div>
+                <h1 className="text-base font-semibold tracking-wide text-[#F2EEE8]">
+                  Fragma Core
+                </h1>
+
+                <p className="text-xs text-[#A8A29A] mt-1">
+                  Desenvolvimento Web
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Navegação */}
-        <nav className="px-4">
-          <p className="px-3 mb-3 text-[11px] uppercase tracking-[0.18em] text-[#8F8982]">
-            Navegação
-          </p>
+          {/* Navegação */}
+          <nav className="px-4">
+            <p className="px-3 mb-3 text-[11px] uppercase tracking-[0.18em] text-[#8F8982]">
+              Navegação
+            </p>
 
-          <div className="space-y-1">
-            <NavItem
-              icon={<Home size={18} strokeWidth={1.8} />}
-              label="Início"
-              link="/"
-            />
+            <div className="space-y-1">
+              <NavItem
+                icon={<Home size={18} strokeWidth={1.8} />}
+                label="Início"
+                link="/"
+              />
 
-            <NavItem
-              icon={<Code2 size={18} strokeWidth={1.8} />}
-              label="Projetos"
-              link="/Projetos"
-            />
+              <NavItem
+                icon={<Code2 size={18} strokeWidth={1.8} />}
+                label="Projetos"
+                link="/Projetos"
+              />
 
-            <NavItem
-              icon={<Cpu size={18} strokeWidth={1.8} />}
-              label="Tecnologias"
-              link="/Tecnologias"
-            />
+              <NavItem
+                icon={<Cpu size={18} strokeWidth={1.8} />}
+                label="Tecnologias"
+                link="/Tecnologias"
+              />
 
-            <NavItem
-              icon={<Info size={18} strokeWidth={1.8} />}
-              label="Sobre"
-              link="/sobre"
-            />
-          </div>
-        </nav>
-
-        {/* Rodapé */}
-        <div className="mt-auto px-7 py-6 border-t border-white/[0.06]">
-          <p className="text-xs text-[#A8A29A]">Fragma Core</p>
-
-          <p className="text-xs text-[#77716B] mt-1">
-            © {new Date().getFullYear()}
-          </p>
-        </div>
-      </aside>
-
-      {/* Área principal */}
-      <div className="flex flex-col flex-1 min-w-0 min-h-0">
-        {/* Topbar */}
-        <header className="h-16 shrink-0 bg-[#1A1A1A] border-b border-white/[0.08] flex items-center px-6 md:px-8">
-          <div className="flex items-center justify-between w-full">
-            <div>
-              <p className="text-sm text-[#D2CDC6]">Fragmentos que se unem.</p>
-
-              <p className="text-xs text-[#918B84] mt-1">
-                Códigos que se transformam.
-              </p>
+              <NavItem
+                icon={<Info size={18} strokeWidth={1.8} />}
+                label="Sobre"
+                link="/sobre"
+              />
             </div>
+          </nav>
 
-            <div className="hidden sm:flex items-center gap-2 text-xs text-[#918B84]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+          {/* Rodapé */}
+          <div className="mt-auto px-7 py-6 border-t border-white/[0.06]">
+            <p className="text-xs text-[#A8A29A]">
               Fragma Core
-            </div>
-          </div>
-        </header>
+            </p>
 
-        {/* Conteúdo das páginas */}
-        <main className="flex-1 min-h-0 min-w-0 overflow-y-auto bg-[#171717]">
-          <Outlet />
-        </main>
+            <p className="text-xs text-[#77716B] mt-1">
+              © {new Date().getFullYear()}
+            </p>
+          </div>
+        </aside>
+
+        {/* Área principal */}
+        <div className="flex flex-col flex-1 min-w-0">
+
+          {/* Topbar */}
+          <header className="h-16 shrink-0 bg-[#1A1A1A] border-b border-white/[0.08] flex items-center px-6 md:px-8">
+            <div className="flex items-center justify-between w-full">
+
+              <div>
+                <p className="text-sm text-[#D2CDC6]">
+                  Fragmentos que se unem.
+                </p>
+
+                <p className="text-xs text-[#918B84] mt-1">
+                  Códigos que se transformam.
+                </p>
+              </div>
+
+              <div className="hidden sm:flex items-center gap-2 text-xs text-[#918B84]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                Fragma Core
+              </div>
+
+            </div>
+          </header>
+
+          {/* Conteúdo */}
+          <main className="flex-1 min-w-0 bg-[#171717]">
+            <Outlet />
+          </main>
+
+        </div>
       </div>
 
       {/* Navegação mobile */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#1D1D1D] border-t border-white/[0.08]">
         <div className="grid grid-cols-4">
-          <MobileNavItem icon={<Home size={18} />} label="Início" link="/" />
+
+          <MobileNavItem
+            icon={<Home size={18} />}
+            label="Início"
+            link="/"
+          />
 
           <MobileNavItem
             icon={<Code2 size={18} />}
@@ -116,8 +137,10 @@ function LayoutPadrao() {
             label="Sobre"
             link="/sobre"
           />
+
         </div>
       </nav>
+
     </div>
   );
 }
@@ -186,7 +209,11 @@ function MobileNavItem({ icon, label, link }) {
         py-3
         text-[11px]
         transition-colors
-        ${isActive ? "text-[#D4AF37]" : "text-[#9C9690]"}
+        ${
+          isActive
+            ? "text-[#D4AF37]"
+            : "text-[#9C9690]"
+        }
         `
       }
     >
