@@ -24,6 +24,7 @@ const projetos = {
 
 function Projetos() {
   const [selecionado, setSelecionado] = useState("Sleep Like a Panda");
+  
 
   const projeto = projetos[selecionado];
 
