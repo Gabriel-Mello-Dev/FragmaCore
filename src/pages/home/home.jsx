@@ -132,9 +132,7 @@ function Home() {
                 }}
                 className="max-w-2xl"
               >
-                <p className="mb-6 text-lg md:text-xl text-[#D2CDC6] leading-relaxed">
-                  Onde imperfeições viram arte.
-                </p>
+        
 
                 <div className="h-px w-full bg-white/[0.08] mb-7" />
 
