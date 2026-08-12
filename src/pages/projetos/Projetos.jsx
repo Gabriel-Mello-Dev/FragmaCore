@@ -1,200 +1,231 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {MorphingText} from '../../components/ui/morphing-text'
+
 const projetos = {
-  "Equipe Inteira": {
-    nome: "🐼 SLP - Sleep Like a Panda",
-    slogan: "“Durma melhor, viva de forma mais inteligente, acorde revigorado.”",
-    descricao: `
-      O SLP - Sleep Like a Panda é uma aplicação web criada para ajudar
-      usuários a controlarem melhor seus horários de sono, com alarmes interativos,
-      relógio em tempo real e uma interface moderna feita em React.
-      O projeto foi desenvolvido com React, Vite, JavaScript, ESLint,
-      Axios, Markdown e JSON, oferecendo uma experiência leve,
-      fluida e de fácil manutenção.
-    `,
-    features: [
-      "Controle de alarmes e horários personalizados",
-      "Relógio em tempo real sincronizado",
-      "Interface moderna e modular",
-      "Configurações otimizadas com Vite + ESLint",
-    ],
+  "Sleep Like a Panda": {
+    nome: "Sleep Like a Panda",
+    descricao:
+      "Experiência interativa voltada à redução de ansiedade no uso de telas, com foco em usabilidade e design envolvente.",
+    tecnologias: ["React", "Axios", "API", "Vite"],
     equipe:
-      "Gabriel de Oliveira Mello • Francisco Felipe da Silva • Celso Fischer Neto",
+      "Gabriel de Oliveira Mello, Francisco Felipe da Silva e Celso Fischer Neto",
     link: "https://slp-sleep-like-a-panda.vercel.app/",
   },
 
-  "Gabriel Mello": {
-    nome: "📂 HostDocs — Documentos & Certificados",
-    slogan: "“Centralize, organize e acesse seus documentos com facilidade.”",
-    descricao: `
-      O HostDocs é um sistema web desenvolvido para armazenar e
-      gerenciar documentos, relatórios e certificados de cursos de forma prática,
-      segura e acessível. Criado com foco em estudantes e profissionais que desejam
-      manter seu portfólio sempre organizado, o HostDocs oferece uma interface
-      limpa, moderna e intuitiva.
-      
-      Desenvolvido utilizando PHP para o back-end e integração com
-      banco de dados  MySQL , o sistema garante performance e
-      segurança. No front-end, o projeto utiliza Tailwind CSS
-      para uma experiência visual moderna e responsiva.
-    `,
-    features: [
-      "Upload e armazenamento seguro de documentos",
-      "Organização por categorias e tipos de arquivo",
-      "Busca rápida e filtragem dinâmica",
-      "Layout responsivo com Tailwind CSS",
-      "Banco de dados estruturado em MySQL",
-    ],
+  Adaptil: {
+    nome: "Adaptil",
+    descricao:
+      "Plataforma de adaptação de conteúdos didáticos personalizados com uso de IA, focada nas necessidades individuais dos alunos.",
+    tecnologias: ["Next.js", "React", "Tailwind", "IA"],
     equipe: "Gabriel de Oliveira Mello",
-    link: "https://hostdocs.byethost17.com",
-  },
-
-  "Francisco Silva": {
-    nome: "Projetos de Francisco Silva",
-    descricao: "Projetos individuais em desenvolvimento...",
-  },
-
-  "Celso Fischer": {
-    nome: "📂 HostDocs — Documentos & Certificados",
-    slogan: "“Centralize, organize e acesse seus documentos com facilidade.”",
-    descricao: `
-      O HostDocs é uma plataforma desenvolvida para facilitar o
-      armazenamento e acesso de documentos, certificados e relatórios acadêmicos
-      de forma simples e segura. Seu design limpo e intuitivo permite que o usuário
-      gerencie seu portfólio digital com rapidez e praticidade.
-      
-      Construído com PHP e MySQL, o sistema
-      possui uma arquitetura sólida e eficiente. A camada visual foi criada com
-      Tailwind CSS, garantindo uma interface moderna, adaptável
-      e leve.
-    `,
-    features: [
-      "Gerenciamento completo de documentos pessoais e acadêmicos",
-      "Sistema de autenticação e controle de acesso",
-      "Visual moderno e minimalista com Tailwind CSS",
-      "Integração com banco de dados MySQL",
-      "Hospedagem otimizada e gratuita",
-    ],
-    equipe: "Celso Fischer Neto",
-    link: "https://hostdocs.byethost17.com",
+    link: "https://adaptil.vercel.app/",
   },
 };
 
+function Projetos() {
+  const [selecionado, setSelecionado] = useState("Sleep Like a Panda");
 
- function Projetos() {
-  const [selecionado, setSelecionado] = useState("Equipe Inteira");
   const projeto = projetos[selecionado];
 
   return (
-    <div className="min-h-screen p-8 text-[#E7E0D8] relative overflow-hidden">
-      {/* Efeito decorativo de fundo rachado dourado */}
-      <div className="absolute inset-0 opacity-10 bg-[url('/imgs/texture-cracked-gold.png')] bg-cover bg-center pointer-events-none" />
+<main className="min-h-full w-full bg-[#171717] text-[#E7E0D8] relative">      {" "}
+      {/* Fundo */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#151515] to-[#0D0D0D]" />
 
-      <div className="relative max-w-5xl mx-auto space-y-10">
-    <MorphingText texts={["Projetos", "Fragma", "Core"]} className="text-yellow-400" />
-
-
-        {/* Select estilizado */}
-        <div className="flex justify-center">
-         <select
-  value={selecionado}
-  onChange={(e) => setSelecionado(e.target.value)}
-  className="
-    relative w-full max-w-xs 
-    appearance-none 
-    bg-gradient-to-br from-[#111]/90 to-[#1B1B1B]/90 
-    border border-[#D4AF37]/40
-    text-[#F5E6C4] font-semibold tracking-wide
-    px-6 py-3 rounded-2xl
-    focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/60
-    cursor-pointer
-    shadow-[0_0_20px_rgba(212,175,55,0.15)]
-    backdrop-blur-md transition-all duration-300
-    hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] hover:border-[#D4AF37]/80
-    [text-shadow:_0_0_8px_rgba(212,175,55,0.3)]
-  "
-  style={{
-    fontFamily: '"Cinzel Decorative", serif',
-    backgroundImage:
-      'linear-gradient(145deg, rgba(30,30,30,0.95), rgba(10,10,10,0.9))',
-  }}
->
-  <option className="bg-[#0F0F0F] text-[#D4AF37]/90 font-medium">
-    Equipe Inteira
-  </option>
-
-  <option className="bg-[#0F0F0F] text-[#E7E0D8]">Francisco Silva</option>
-  <option className="bg-[#0F0F0F] text-[#E7E0D8]">Celso Fischer</option>
-  <option className="bg-[#0F0F0F] text-[#E7E0D8]"> Gabriel Mello</option>
-</select>
-
-        </div>
-
-        {/* Conteúdo do projeto */}
-        <AnimatePresence mode="wait">
+        <div
+          className="absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+      </div>
+<div className="relative z-10 w-full min-h-full px-6 py-10 md:px-10 md:py-12">        <div className="w-full max-w-6xl mx-auto space-y-10">
+          {/* Título */}
           <motion.div
-            key={selecionado}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.5 }}
-            className="bg-[#1B1B1B]/40 border border-[#D4AF37]/30 rounded-2xl p-8 shadow-[0_0_25px_rgba(212,175,55,0.15)] backdrop-blur-md"
+            transition={{
+              duration: 0.5,
+              ease: "easeOut",
+            }}
+            className="text-center"
           >
-            <h2 className="text-2xl font-semibold text-[#D4AF37] mb-3 flex items-center gap-2">
-              {projeto.nome}
-            </h2>
+            <span className="text-xs uppercase tracking-[0.2em] text-[#D4AF37]">
+              Portfólio
+            </span>
 
-            {projeto.slogan && (
-              <p className="italic text-[#E7E0D8]/80 mb-4">{projeto.slogan}</p>
-            )}
+            <h1 className="mt-3 text-4xl md:text-5xl font-semibold tracking-tight text-[#F0EBE5]">
+              Projetos
+            </h1>
 
-            <p className="text-[#E7E0D8]/70 leading-relaxed whitespace-pre-line">
-              {projeto.descricao}
+            <p className="mt-4 text-sm md:text-base text-[#E7E0D8]/50">
+              Conheça alguns dos projetos desenvolvidos pela Fragma Core.
             </p>
+          </motion.div>
 
-            {projeto.features && (
-              <ul className="mt-4 list-disc list-inside text-[#E7E0D8]/70 text-sm grid md:grid-cols-2 gap-x-6">
-                {projeto.features.map((f, i) => (
-                  <li key={i}>{f}</li>
-                ))}
-              </ul>
-            )}
+          {/* Seletor */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.45,
+              delay: 0.1,
+            }}
+            className="flex justify-center"
+          >
+            <select
+              value={selecionado}
+              onChange={(e) => setSelecionado(e.target.value)}
+              className="
+                appearance-none
+                w-full
+                max-w-xs
+                bg-[#111111]
+                border border-[#D4AF37]/30
+                text-[#E7E0D8]
+                px-5
+                py-3
+                rounded-xl
+                focus:outline-none
+                focus:border-[#D4AF37]
+                cursor-pointer
+                transition-colors
+              "
+            >
+              <option value="Sleep Like a Panda">Sleep Like a Panda</option>
 
-            {projeto.equipe && (
-              <p className="mt-5 text-sm text-[#E7E0D8]/60">
-                👥 Desenvolvido por: <br /> {projeto.equipe}
+              <option value="Adaptil">Adaptil</option>
+            </select>
+          </motion.div>
+
+          {/* Projeto */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selecionado}
+              initial={{
+                opacity: 0,
+                y: 15,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: -15,
+              }}
+              transition={{
+                duration: 0.4,
+                ease: "easeOut",
+              }}
+              className="
+                bg-[#151515]
+                border
+                border-[#D4AF37]/25
+                rounded-2xl
+                p-7
+                md:p-10
+              "
+            >
+              {/* Nome */}
+              <div className="mb-6">
+                <span className="text-xs uppercase tracking-[0.18em] text-[#D4AF37]">
+                  Projeto
+                </span>
+
+                <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-[#F0EBE5]">
+                  {projeto.nome}
+                </h2>
+              </div>
+
+              {/* Descrição */}
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-[#E7E0D8]/65">
+                {projeto.descricao}
               </p>
-            )}
 
-            {projeto.link && (
+              {/* Tecnologias */}
+              <div className="flex flex-wrap gap-2 mt-7">
+                {projeto.tecnologias.map((tecnologia) => (
+                  <span
+                    key={tecnologia}
+                    className="
+                      px-3
+                      py-1.5
+                      text-xs
+                      border
+                      border-[#E7E0D8]/10
+                      rounded-md
+                      text-[#E7E0D8]/55
+                      bg-[#0D0D0D]/40
+                    "
+                  >
+                    {tecnologia}
+                  </span>
+                ))}
+              </div>
+
+              {/* Equipe */}
+              <div className="mt-8 pt-6 border-t border-[#E7E0D8]/10">
+                <span className="text-xs uppercase tracking-[0.16em] text-[#E7E0D8]/35">
+                  Desenvolvido por
+                </span>
+
+                <p className="mt-2 text-sm text-[#E7E0D8]/60">
+                  {projeto.equipe}
+                </p>
+              </div>
+
+              {/* Link */}
               <div className="mt-6">
                 <a
                   href={projeto.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#D4AF37] underline hover:text-[#E7E0D8] text-sm transition-colors"
+                  className="
+                    inline-flex
+                    items-center
+                    gap-2
+                    text-sm
+                    text-[#D4AF37]
+                    hover:text-[#F0EBE5]
+                    transition-colors
+                  "
                 >
-                  🌐 Acessar projeto hospedado
+                  Acessar projeto
+                  <span>↗</span>
                 </a>
               </div>
-            )}
 
-            {/* Preview via iframe */}
-            {projeto.link && (
-              <div className="mt-6 overflow-hidden rounded-xl border border-[#D4AF37]/30 shadow-inner shadow-[#D4AF37]/10 hover:scale-[1.01] transition-transform duration-300">
-                <iframe
-                  src={projeto.link}
-                  title="SLP Sleep Like a Panda Preview"
-                  className="w-full h-[500px] rounded-xl border-0"
-                ></iframe>
+              {/* Preview */}
+              <div className="mt-8">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-xs uppercase tracking-[0.16em] text-[#E7E0D8]/30">
+                    Preview
+                  </span>
+
+                  <span className="text-xs text-[#E7E0D8]/20">
+                    Aplicação hospedada
+                  </span>
+                </div>
+
+                <div className="overflow-hidden rounded-xl border border-[#E7E0D8]/10 bg-white">
+                  <iframe
+                    src={projeto.link}
+                    title={`Preview de ${projeto.nome}`}
+                    loading="lazy"
+                    className="w-full h-[450px] md:h-[550px] border-0"
+                  />
+                </div>
               </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 
-export {Projetos}
+export { Projetos };
