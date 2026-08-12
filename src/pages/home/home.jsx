@@ -23,7 +23,6 @@ function Home() {
   return (
     <main className="min-h-screen bg-[#171717] text-[#F2EEE8] overflow-hidden">
       <div className="relative min-h-screen flex flex-col">
-
         {/* Background */}
         <div
           aria-hidden="true"
@@ -52,7 +51,6 @@ function Home() {
           className="relative z-10 w-full px-6 py-6 md:px-10 md:py-8"
         >
           <div className="mx-auto max-w-6xl flex items-center justify-between">
-
             <div className="flex items-center gap-3">
               <img
                 src="/imgs/logo.png"
@@ -68,17 +66,14 @@ function Home() {
             <span className="hidden sm:block text-xs tracking-[0.18em] uppercase text-[#A8A29A]">
               Desenvolvimento Web
             </span>
-
           </div>
         </motion.header>
 
         {/* Main */}
         <section className="relative z-10 flex-1 px-6 pt-20 pb-32 md:px-10 md:pt-28 md:pb-40">
           <div className="mx-auto w-full max-w-6xl">
-
             {/* Hero */}
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-24 items-center">
-
               {/* Left */}
               <motion.div
                 initial={{ opacity: 0, x: -24 }}
@@ -109,14 +104,10 @@ function Home() {
                     Desenvolvimento Web
                   </span>
                 </div>
-
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[0.95] text-[#F0EBE5]">
+                <h1 className="w-full max-w-[520px] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[0.95] text-[#F0EBE5]">
                   <MorphingText
-                    texts={[
-                      "Arte em Código",
-                      "Fragma Core",
-                    ]}
-                    className="text-left text-[#F0EBE5]"
+                    texts={["Arte em Código", "Fragma Core"]}
+                    className="text-left text-[#F0EBE5] w-full"
                   />
                 </h1>
               </motion.div>
@@ -132,8 +123,6 @@ function Home() {
                 }}
                 className="max-w-2xl"
               >
-        
-
                 <div className="h-px w-full bg-white/[0.08] mb-7" />
 
                 <p className="text-base md:text-lg leading-[1.8] text-[#D2CDC6] font-light">
@@ -177,22 +166,18 @@ function Home() {
               className="pt-8 border-t border-white/[0.08]"
             >
               <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-5 md:gap-12">
-
                 <span className="text-xs uppercase tracking-[0.2em] text-[#D4AF37]">
                   Nossa filosofia
                 </span>
 
                 <p className="max-w-3xl text-sm md:text-base leading-7 text-[#A8A29A]">
-                  Assim como no{" "}
-                  <i className="text-[#D2CDC6]">Kintsugi</i>, acreditamos
-                  que aquilo que foi quebrado não precisa ser escondido.
-                  Pode ser reconstruído, aprimorado e transformado em parte
-                  essencial daquilo que se tornou.
+                  Assim como no <i className="text-[#D2CDC6]">Kintsugi</i>,
+                  acreditamos que aquilo que foi quebrado não precisa ser
+                  escondido. Pode ser reconstruído, aprimorado e transformado em
+                  parte essencial daquilo que se tornou.
                 </p>
-
               </div>
             </motion.section>
-
           </div>
         </section>
 
@@ -207,15 +192,9 @@ function Home() {
           className="relative z-10 px-6 py-6 md:px-10 border-t border-white/[0.06]"
         >
           <div className="mx-auto max-w-6xl flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+            <span className="text-xs text-[#918B84]">Fragma Core</span>
 
-            <span className="text-xs text-[#918B84]">
-              Fragma Core
-            </span>
-
-            <span className="text-xs text-[#918B84]">
-              Desenvolvimento Web
-            </span>
-
+            <span className="text-xs text-[#918B84]">Desenvolvimento Web</span>
           </div>
         </motion.footer>
 
@@ -247,7 +226,6 @@ function Home() {
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
     </main>
   );
