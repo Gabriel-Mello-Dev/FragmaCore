@@ -7,6 +7,7 @@ const HeroScene = dynamic(() => import("./HeroScene"), {
   ssr: false,
 });
 
+
 export function HeroVisual() {
   return (
     <div className="relative mx-auto h-0 w-full max-w-[520px]">
