@@ -187,15 +187,7 @@ export default function HeroScene({ active }: { active: boolean }) {
         powerPreference: "high-performance",
       }}
       style={{ pointerEvents: "none" }}
-      events={() => ({
-        enabled: false,
-        priority: 0,
-        connected: undefined,
-        handlers: {},
-        compute: () => {},
-        connect: () => {},
-        disconnect: () => {},
-      })}
+    
       frameloop={active ? "always" : "demand"}
       aria-hidden="true"
     >
