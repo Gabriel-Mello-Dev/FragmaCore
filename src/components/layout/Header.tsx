@@ -23,7 +23,7 @@ export function Header() {
         >
           <img
             src="/images/fragma.png"
-            
+
             alt="Fragma Core"
             className="h-10 w-auto object-contain"
           />
