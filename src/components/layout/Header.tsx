@@ -22,7 +22,7 @@ export function Header() {
           aria-label="Fragma Core, página inicial"
         >
           <img
-            src="/images/fragma.png"
+            src="/images/Fragma.png"
 
             alt="Fragma Core"
             className="h-10 w-auto object-contain"
