@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; background: #0C0B0A; }
+  body { @apply bg-obsidian font-sans text-bone antialiased; }
+  h1, h2, h3 { @apply font-display; }
+  ::selection { background: #C8A04C; color: #0C0B0A; }
+  :focus-visible { outline: 2px solid #E3C887; outline-offset: 3px; }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+  .section { @apply py-20 md:py-28; }
+
+  /* Botões: preenchimento que entra por uma borda fraturada */
+  .btn {
+    position: relative; isolation: isolate; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.85rem 1.5rem; font-weight: 600; font-size: 0.95rem; line-height: 1.2;
+    transition: color .35s ease, border-color .35s ease, transform .2s ease;
+  }
+  .btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    clip-path: polygon(0 0, 0 0, 0 50%, 0 100%, 0 100%);
+    transition: clip-path .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .btn:hover::before, .btn:focus-visible::before {
+    clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-solid { background: #C8A04C; color: #0C0B0A; }
+  .btn-solid::before { background: #EDE8DC; }
+  .btn-line { border: 1px solid rgb(237 232 220 / .35); color: #EDE8DC; }
+  .btn-line::before { background: #C8A04C; }
+  .btn-line:hover, .btn-line:focus-visible { color: #0C0B0A; border-color: #C8A04C; }
+
+  /* Fio de ouro que se desenha */
+  .seam { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s cubic-bezier(.3,.6,.2,1); }
+  .seam-on .seam { stroke-dashoffset: 0; }
+
+  .intro { animation: intro .9s cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--d, 0s); }
+  .hero-seam .seam { animation: draw 2.2s cubic-bezier(.3,.6,.2,1) .3s both; }
+}
+
+@keyframes intro { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0s !important; transition-duration: .001ms !important; }
+  .seam { stroke-dashoffset: 0 !important; }
+}
