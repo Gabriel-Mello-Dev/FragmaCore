@@ -23,10 +23,14 @@ export const metadata: Metadata = {
     default: "Fragma Core · Desenvolvimento web, IA e marketing digital",
     template: "%s",
   },
+  icons: {
+    icon: "/favicon.ico",
+  },
   description: site.description,
   alternates: { canonical: "/" },
   openGraph: {
     title: "Fragma Core",
+
     description: site.description,
     url: site.url,
     siteName: site.name,
