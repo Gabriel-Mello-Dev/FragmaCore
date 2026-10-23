@@ -91,6 +91,7 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
         })}
       </div>
 
+
       <p className="sr-only" role="status" aria-live="polite">
         {statusText}
       </p>
