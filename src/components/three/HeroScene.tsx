@@ -16,7 +16,7 @@ const seeded = (i: number) => ((i * 9301 + 49297) % 233280) / 233280;
 
 function useShards(): Shard[] {
   return useMemo(() => {
-    const base = new THREE.IcosahedronGeometry(1.05, 1).toNonIndexed();
+    const base = new THREE.IcosahedronGeometry(1.02, 1).toNonIndexed();
     const pos = base.getAttribute("position");
     const out: Shard[] = [];
 
@@ -34,8 +34,8 @@ function useShards(): Shard[] {
         geo,
         edges: new THREE.EdgesGeometry(geo),
         dir: a.clone().add(b).add(c).normalize(),
-        amp: 0.03 + seeded(k) * 0.07,
-        gold: k % 11 === 0,
+        amp: 0.025 + seeded(k) * 0.05,
+        gold: k % 9 === 0,
       });
     }
 
@@ -91,53 +91,58 @@ function Fragments() {
     const { x, y } = cursor.current;
     const progress = scroll.current;
 
-    s.spin += delta * 0.12;
-    s.rx = THREE.MathUtils.damp(s.rx, y * 0.25, 3, delta);
-    s.ry = THREE.MathUtils.damp(s.ry, x * 0.4, 3, delta);
-    s.open = THREE.MathUtils.damp(s.open, 1 - progress, 3, delta);
+    s.spin += delta * 0.08;
+    s.rx = THREE.MathUtils.damp(s.rx, y * 0.18, 4, delta);
+    s.ry = THREE.MathUtils.damp(s.ry, x * 0.28, 4, delta);
 
     if (group.current) {
       const isMobile = size.width < 768;
+      const isTablet = size.width >= 768 && size.width < 1024;
 
-      // Posiciona a esfera na coluna direita do Hero.
-      group.current.position.x = isMobile ? 0 : viewport.width * 0.25;
+      if (isMobile) {
+        group.current.position.x = 0;
+        group.current.position.y = -viewport.height * 0.08;
+        group.current.scale.setScalar(0.24);
+      } else if (isTablet) {
+        group.current.position.x = viewport.width * 0.18;
+        group.current.position.y = -viewport.height * 0.1;
+        group.current.scale.setScalar(0.48);
+      } else {
+        group.current.position.x = viewport.width * 0.28;
+        group.current.position.y = -viewport.height * 0.14;
+        group.current.scale.setScalar(0.58);
+      }
 
-      // Em celulares, deixa a esfera mais abaixo e menor.
-      group.current.position.y = isMobile
-        ? -viewport.height * 0.15
-        : -viewport.height * 0.12;
-      group.current.scale.setScalar(isMobile ? 0.3 : 0.62);
-
-      group.current.rotation.x = s.rx;
-      group.current.rotation.y = s.spin + s.ry;
+      group.current.rotation.x = s.rx * 0.8;
+      group.current.rotation.y = s.spin + s.ry * 0.8;
     }
     shards.forEach((sh, i) => {
       const g = items.current[i];
       if (!g) return;
 
-      // Cada fragmento começa a cair em um momento diferente.
-      const delay = seeded(i + 37) * 0.3;
+      const delay = seeded(i + 37) * 0.18;
       const fallProgress = THREE.MathUtils.clamp(
-        (progress - delay) / (1 - delay),
+        (progress - delay) / (0.9 - delay),
         0,
         1,
       );
 
-      const fall = Math.pow(fallProgress, 1.35);
-      const spread = fallProgress * (0.08 + seeded(i + 81) * 0.32);
-      // Os fragmentos se afastam da esfera e caem.
+      const eased = fallProgress * (2 - fallProgress);
+      const spread = eased * (0.05 + seeded(i + 81) * 0.22);
+      const isMobile = size.width < 768;
+      const driftScale = isMobile ? 0.6 : 1.0;
+
       g.position.set(
         sh.dir.x * (sh.amp + spread),
         sh.dir.y * (sh.amp + spread) -
-          fall * viewport.height * (1.0 + seeded(i + 12) * 0.65),
+          eased * viewport.height * (0.8 + seeded(i + 12) * 0.4) * driftScale,
         sh.dir.z * (sh.amp + spread),
       );
 
-      // Cada pedaço gira individualmente durante a queda.
       g.rotation.set(
-        fall * (seeded(i + 101) - 0.5) * 5,
-        fall * (seeded(i + 202) - 0.5) * 5,
-        fall * (seeded(i + 303) - 0.5) * 5,
+        eased * (seeded(i + 101) - 0.5) * 2.2,
+        eased * (seeded(i + 202) - 0.5) * 2.2,
+        eased * (seeded(i + 303) - 0.5) * 1.6,
       );
     });
   });
@@ -153,21 +158,21 @@ function Fragments() {
         >
           <mesh geometry={sh.geo}>
             <meshStandardMaterial
-              color={sh.gold ? "#C8A04C" : "#51483A"}
-              metalness={0.7}
-              roughness={0.35}
+              color={sh.gold ? "#D9B25C" : "#5C5043"}
+              metalness={0.6}
+              roughness={0.38}
               side={THREE.DoubleSide}
               flatShading
-              emissive={sh.gold ? "#5A3B0C" : "#15120F"}
-              emissiveIntensity={0.25}
+              emissive={sh.gold ? "#6B4A14" : "#17130F"}
+              emissiveIntensity={0.18}
             />
           </mesh>
 
           <lineSegments geometry={sh.edges}>
             <lineBasicMaterial
-              color={sh.gold ? "#F0C96B" : "#C8A04C"}
+              color={sh.gold ? "#E6C98A" : "#B9A06B"}
               transparent
-              opacity={0.9}
+              opacity={0.8}
             />
           </lineSegments>
         </group>
@@ -179,22 +184,22 @@ function Fragments() {
 export default function HeroScene({ active }: { active: boolean }) {
   return (
     <Canvas
-      dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 5.2], fov: 34 }}
+      dpr={[1, 1.5]}
+      camera={{ position: [0, 0, 5.4], fov: 32 }}
       gl={{
         antialias: true,
         alpha: true,
         powerPreference: "high-performance",
       }}
       style={{ pointerEvents: "none" }}
-    
+
       frameloop={active ? "always" : "demand"}
       aria-hidden="true"
     >
-      <ambientLight intensity={1.2} />
-      <directionalLight position={[3, 4, 5]} intensity={2.5} color="#EDE8DC" />
-      <pointLight position={[-4, -2, 3]} intensity={10} color="#3E8E84" />
-      <pointLight position={[3, 1, 2]} intensity={5} color="#C8A04C" />
+      <ambientLight intensity={1.1} />
+      <directionalLight position={[4, 5, 6]} intensity={2.2} color="#EDE8DC" />
+      <pointLight position={[-3, -2, 3]} intensity={6} color="#3E8E84" />
+      <pointLight position={[3, 1, 2]} intensity={4} color="#C8A04C" />
 
       <Fragments />
     </Canvas>

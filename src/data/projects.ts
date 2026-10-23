@@ -1,6 +1,10 @@
 import type { MemberSlug } from "./members";
 
-export type ProjectCategory = "desenvolvimento" | "marketing";
+export type ProjectCategory =
+  | "desenvolvimento"
+  | "marketing"
+  | "consultoria-programacao"
+  | "consultoria-marketing";
 
 export type CaseStudy = {
   context: string;
@@ -33,6 +37,8 @@ export type Project = {
 export const categoryLabels: Record<ProjectCategory, string> = {
   desenvolvimento: "Desenvolvimento",
   marketing: "Marketing",
+  "consultoria-programacao": "Consultoria de Programação",
+  "consultoria-marketing": "Consultoria de Marketing",
 };
 
 /**
@@ -144,6 +150,19 @@ export const projects: Project[] = [
         "Não há promessa ou garantia de posicionamento em mecanismos de busca ou sistemas de IA.",
       ],
     },
+  },
+  {
+    slug: "beehub",
+    title: "BeeHub",
+    summary:
+      "Contribuí para a evolução técnica do BeeHub, auxiliando na análise da estrutura do projeto, na identificação de melhorias e no desenvolvimento de funcionalidades. Também colaborei com os demais integrantes da equipe por meio de orientações técnicas, sugestões de implementação e apoio à programação, contribuindo para a organização do código e para a evolução da solução.",
+    role: "Consultoria técnica, análise de arquitetura e apoio ao desenvolvimento",
+    stack: ["React", "Java", "Spring Boot"],
+    status: "publicado",
+    category: "consultoria-programacao",
+    image: "/images/BeeHubDark.jpeg",
+    imageAlt: "Imagem do projeto BeeHub",
+    members: [],
   },
 ];
 
