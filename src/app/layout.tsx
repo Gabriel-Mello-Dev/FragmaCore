@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { KintsugiVeins } from "@/components/ui/KintsugiVeins";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -71,6 +72,8 @@ export default function RootLayout({
         >
           Ir para o conteúdo
         </Link>
+
+        <KintsugiVeins />
 
         <div className="relative z-10">
           <Header />

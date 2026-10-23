@@ -17,7 +17,7 @@ export function Hero() {
             Códigos que se transformam.
           </h1>
           <p className="intro mt-7 max-w-xl text-lg leading-relaxed text-bone/80" style={{ "--d": ".25s" } as React.CSSProperties}>
-            Criamos sites, sistemas e automações, e levamos clientes até eles com marketing digital. Uma equipe só, do código ao anúncio.
+            Criamos sites e sistemas, levamos clientes até eles com marketing digital. Uma equipe só, do código ao anúncio.
           </p>
           <div className="intro mt-9 flex flex-wrap gap-3" style={{ "--d": ".4s" } as React.CSSProperties}>
             <Button href="/#contato">Pedir um diagnóstico</Button>
