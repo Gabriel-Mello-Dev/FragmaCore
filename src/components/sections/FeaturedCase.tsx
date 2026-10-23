@@ -66,7 +66,7 @@ export function FeaturedCase({ project }: { project: Project }) {
               alt={project.imageAlt ?? `Imagem do projeto ${project.title}`}
               fill
               sizes="(max-width: 1024px) 100vw, 40vw"
-              className="object-cover object-top"
+              className="object-cover object-[left_top]"
             />
           ) : (
             <ProjectMark seed={project.slug} />
@@ -89,7 +89,10 @@ export function FeaturedCase({ project }: { project: Project }) {
             </h5>
             <ul className="mt-4 space-y-2.5">
               {section.items.map((item) => (
-                <li key={item} className="flex gap-3 text-sm leading-6 text-ash">
+                <li
+                  key={item}
+                  className="flex gap-3 text-sm leading-6 text-ash"
+                >
                   <span
                     className="mt-[0.7em] h-px w-2 flex-none bg-kin"
                     aria-hidden="true"
