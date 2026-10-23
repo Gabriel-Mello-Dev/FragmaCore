@@ -14,7 +14,9 @@ type Filter = "todos" | ProjectCategory;
 const filters: { id: Filter; label: string }[] = [
   { id: "todos", label: "Todos" },
   { id: "desenvolvimento", label: categoryLabels.desenvolvimento },
+  { id: "consultoria-programacao", label: categoryLabels["consultoria-programacao"] },
   { id: "marketing", label: categoryLabels.marketing },
+  { id: "consultoria-marketing", label: categoryLabels["consultoria-marketing"] },
 ];
 
 export function ProjectsExplorer({ projects }: { projects: Project[] }) {
@@ -26,6 +28,12 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
   const marketing = projects.filter(
     (project) => project.category === "marketing",
   );
+  const consultoriaProgramacao = projects.filter(
+    (project) => project.category === "consultoria-programacao",
+  );
+  const consultoriaMarketing = projects.filter(
+    (project) => project.category === "consultoria-marketing",
+  );
   const featured = marketing.find((project) => project.featured) ?? marketing[0];
   const otherMarketing = marketing.filter(
     (project) => project.slug !== featured?.slug,
@@ -33,11 +41,15 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
 
   const count = (id: Filter) => {
     if (id === "todos") return projects.length;
-    return id === "desenvolvimento" ? development.length : marketing.length;
+    if (id === "desenvolvimento") return development.length;
+    if (id === "marketing") return marketing.length;
+    if (id === "consultoria-programacao") return consultoriaProgramacao.length;
+    if (id === "consultoria-marketing") return consultoriaMarketing.length;
+    return 0;
   };
 
-  const developmentGrid =
-    development.length >= 3
+  const gridClass = (items: number) =>
+    items >= 3
       ? "mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
       : "mt-8 grid gap-6 md:grid-cols-2";
 
@@ -62,7 +74,7 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
               aria-pressed={active}
               aria-controls={
                 item.id === "todos"
-                  ? "projetos-desenvolvimento projetos-marketing"
+                  ? "projetos-desenvolvimento projetos-consultoria-programacao projetos-marketing projetos-consultoria-marketing"
                   : `projetos-${item.id}`
               }
               onClick={() => setFilter(item.id)}
@@ -106,7 +118,7 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
             </p>
           </div>
 
-          <div className={developmentGrid}>
+          <div className={gridClass(development.length)}>
             {development.map((project) => (
               <ProjectCard
                 key={project.slug}
@@ -115,6 +127,57 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
               />
             ))}
           </div>
+        </section>
+
+        <section
+          id="projetos-consultoria-programacao"
+          aria-labelledby="projetos-consultoria-programacao-title"
+          className={
+            filter === "todos" ||
+            filter === "consultoria-programacao"
+              ? undefined
+              : "hidden"
+          }
+        >
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-kin">
+                01a · Consultoria de Programação
+              </p>
+              <h3
+                id="projetos-consultoria-programacao-title"
+                className="mt-2 font-display text-2xl font-semibold tracking-tight text-bone md:text-3xl"
+              >
+                Análise, arquitetura e apoio ao desenvolvimento
+              </h3>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-ash">
+              Contribuição técnica, revisão de código e orientação para evolução
+              de projetos.
+            </p>
+          </div>
+
+          {consultoriaProgramacao.length > 0 ? (
+            <div className={gridClass(consultoriaProgramacao.length)}>
+              {consultoriaProgramacao.map((project) => (
+                <ProjectCard
+                  key={project.slug}
+                  project={project}
+                  headingLevel="h4"
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 flex min-h-[12rem] flex-col justify-center border border-dashed border-line p-6 text-ash">
+              <p className="font-display text-lg text-bone">
+                Projetos em breve.
+              </p>
+              <p className="mt-2 text-sm">
+                Novos projetos de consultoria de programação serão adicionados
+                quando publicados.
+              </p>
+            </div>
+          )}
         </section>
 
         <section
@@ -154,6 +217,56 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
                   headingLevel="h4"
                 />
               ))}
+            </div>
+          )}
+        </section>
+
+        <section
+          id="projetos-consultoria-marketing"
+          aria-labelledby="projetos-consultoria-marketing-title"
+          className={
+            filter === "todos" ||
+            filter === "consultoria-marketing"
+              ? undefined
+              : "hidden"
+          }
+        >
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-kin">
+                02a · Consultoria de Marketing
+              </p>
+              <h3
+                id="projetos-consultoria-marketing-title"
+                className="mt-2 font-display text-2xl font-semibold tracking-tight text-bone md:text-3xl"
+              >
+                Estratégia, tráfego e posicionamento digital
+              </h3>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-ash">
+              Estrutura preparada para projetos de consultoria em marketing e
+              performance.
+            </p>
+          </div>
+
+          {consultoriaMarketing.length > 0 ? (
+            <div className={gridClass(consultoriaMarketing.length)}>
+              {consultoriaMarketing.map((project) => (
+                <ProjectCard
+                  key={project.slug}
+                  project={project}
+                  headingLevel="h4"
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 flex min-h-[12rem] flex-col justify-center border border-dashed border-line p-6 text-ash">
+              <p className="font-display text-lg text-bone">
+                Estrutura pronta para receber projetos.
+              </p>
+              <p className="mt-2 text-sm">
+                Nenhum projeto cadastrado nesta categoria até o momento.
+              </p>
             </div>
           )}
         </section>
