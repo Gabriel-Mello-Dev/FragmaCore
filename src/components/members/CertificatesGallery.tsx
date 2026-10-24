@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -31,16 +30,18 @@ const certificatesByMember: Record<string, Certificate[]> = {
       year: "2026",
     },
     {
-      title: "Dominando React.js",
-      category: "Tecnologia",
-      image: "tecnologia/react.png",
-    },
-    {
-      title: "Ministrei- Criando Uma Plataforma WEB Para Jogos Digitais: Visão de Usuário e Desenvolvedor",
+      title:
+        "Ministrei- Criando Uma Plataforma WEB Para Jogos Digitais: Visão de Usuário e Desenvolvedor",
       category: "Tecnologia",
       image: "tecnologia/dev-web.png",
       year: "2026",
     },
+    {
+      title: "Dominando React.js",
+      category: "Tecnologia",
+      image: "tecnologia/react.png",
+    },
+
     {
       title: "Processos de teste de software",
       category: "Tecnologia",
@@ -48,17 +49,19 @@ const certificatesByMember: Record<string, Certificate[]> = {
       year: "2024",
     },
     {
+      title:
+        "Ministrei- Estratégias de Marketing e como Aplicá-las a Jogos Digitais",
+      category: "Marketing",
+      image: "marketing/estrategias-marketing.png",
+      year: "2026",
+    },
+    {
       title: "Ministrei- Criação de Anúncios para Jogos Digitais",
       category: "Marketing",
       image: "marketing/anuncios-jogos.png",
       year: "2026",
     },
-    {
-      title: "Ministrei- Estratégias de Marketing e como Aplicá-las a Jogos Digitais",
-      category: "Marketing",
-      image: "marketing/estrategias-marketing.png",
-      year: "2026",
-    },
+
     {
       title: "Alavancagem de Produtos Digitais: da Teoria à Prática",
       category: "Marketing",
@@ -77,9 +80,7 @@ const categories: CertificateCategory[] = [
   "Marketing",
 ];
 
-export function CertificatesGallery({
-  memberSlug,
-}: CertificatesGalleryProps) {
+export function CertificatesGallery({ memberSlug }: CertificatesGalleryProps) {
   const [activeCategory, setActiveCategory] =
     useState<CertificateCategory>("Pesquisa");
   const [selectedCertificate, setSelectedCertificate] =
@@ -91,8 +92,7 @@ export function CertificatesGallery({
     (certificate) => certificate.category === activeCategory,
   );
 
-  const imagePath = (image: string) =>
-    `/Certificates/${memberSlug}/${image}`;
+  const imagePath = (image: string) => `/Certificates/${memberSlug}/${image}`;
 
   return (
     <section id="certificados" className="space-y-6">
@@ -203,9 +203,7 @@ export function CertificatesGallery({
           >
             <div className="mb-3 flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-semibold">
-                  {selectedCertificate.title}
-                </h3>
+                <h3 className="font-semibold">{selectedCertificate.title}</h3>
                 {selectedCertificate.year && (
                   <p className="mt-1 text-sm text-muted-foreground">
                     {selectedCertificate.year}
