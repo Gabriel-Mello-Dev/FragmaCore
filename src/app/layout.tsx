@@ -6,6 +6,8 @@ import { Header } from "@/components/layout/Header";
 import { KintsugiVeins } from "@/components/ui/KintsugiVeins";
 import { site } from "@/data/site";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -66,6 +68,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable}`}>
       <body>
+        <Analytics />
+        <SpeedInsights />
         <Link
           href="#conteudo"
           className="sr-only z-50 bg-kin px-4 py-2 text-obsidian focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
