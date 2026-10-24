@@ -45,132 +45,192 @@ function useShards(): Shard[] {
 }
 
 function Fragments() {
-  const { viewport, size } = useThree();
+  const { viewport, size, camera } = useThree();
+
   const shards = useShards();
   const group = useRef<THREE.Group>(null);
   const items = useRef<(THREE.Group | null)[]>([]);
-  const cursor = useRef({ x: 0, y: 0 });
-  const scroll = useRef(0);
-  const state = useRef({ rx: 0, ry: 0, spin: 0, open: 0 });
+
+  const pointer = useRef(new THREE.Vector2(-10, -10));
+  const raycaster = useMemo(() => new THREE.Raycaster(), []);
+  const plane = useMemo(
+    () => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0),
+    [],
+  );
+  const intersection = useMemo(() => new THREE.Vector3(), []);
+
+  const localMouse = useMemo(() => new THREE.Vector3(), []);
+  const explode = useRef(0);
 
   useEffect(() => {
-    const updatePointer = (e: PointerEvent) => {
-      cursor.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-      cursor.current.y = (e.clientY / window.innerHeight) * 2 - 1;
+    const handlePointerMove = (event: PointerEvent) => {
+      pointer.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      pointer.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
-    const updateScroll = () => {
-      scroll.current = Math.min(
-        1,
-        Math.max(0, window.scrollY / (window.innerHeight * 2.2)),
-      );
+    const handlePointerLeave = () => {
+      pointer.current.set(-10, -10);
     };
 
-    window.addEventListener("pointermove", updatePointer, {
-      passive: true,
-    });
-    window.addEventListener("scroll", updateScroll, {
+    window.addEventListener("pointermove", handlePointerMove, {
       passive: true,
     });
 
-    updateScroll();
+    document.documentElement.addEventListener(
+      "pointerleave",
+      handlePointerLeave,
+    );
 
     return () => {
-      window.removeEventListener("pointermove", updatePointer);
-      window.removeEventListener("scroll", updateScroll);
-
-      shards.forEach((sh) => {
-        sh.geo.dispose();
-        sh.edges.dispose();
-      });
+      window.removeEventListener("pointermove", handlePointerMove);
+      document.documentElement.removeEventListener(
+        "pointerleave",
+        handlePointerLeave,
+      );
     };
-  }, [shards]);
+  }, []);
 
   useFrame((_, delta) => {
-    const s = state.current;
-    const { x, y } = cursor.current;
-    const progress = scroll.current;
+    if (!group.current) return;
 
-    s.spin += delta * 0.08;
-    s.rx = THREE.MathUtils.damp(s.rx, y * 0.18, 4, delta);
-    s.ry = THREE.MathUtils.damp(s.ry, x * 0.28, 4, delta);
+    const isTablet = size.width < 1024;
+    const scale = isTablet ? 0.42 : 0.58;
 
-    if (group.current) {
-      const isMobile = size.width < 768;
-      const isTablet = size.width >= 768 && size.width < 1024;
+    // A esfera fica fixa na tela.
+    group.current.position.set(viewport.width * 0.25, 0, 0);
+    group.current.scale.setScalar(scale);
+    group.current.rotation.set(0, 0, 0);
 
-      if (isMobile) {
-        group.current.position.x = 0;
-        group.current.position.y = -viewport.height * 0.08;
-        group.current.scale.setScalar(0.24);
-      } else if (isTablet) {
-        group.current.position.x = viewport.width * 0.18;
-        group.current.position.y = -viewport.height * 0.1;
-        group.current.scale.setScalar(0.48);
+    // Converte o cursor para o plano local da esfera.
+    raycaster.setFromCamera(pointer.current, camera);
+
+    const hit = raycaster.ray.intersectPlane(plane, intersection);
+
+    if (hit && group.current) {
+      localMouse.copy(intersection);
+      group.current.worldToLocal(localMouse);
+    } else {
+      localMouse.set(100, 100, 100);
+    }
+
+    let maxForce = 0;
+
+    shards.forEach((shard, i) => {
+      const item = items.current[i];
+      if (!item) return;
+
+      const phase = seeded(i + 47) * Math.PI * 2;
+
+      // Centro aproximado de cada fragmento na esfera.
+      const center = shard.dir.clone().multiplyScalar(1.02);
+
+      // Distância entre o mouse e o fragmento.
+      const dx = center.x - localMouse.x;
+      const dy = center.y - localMouse.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      // Raio de influência do cursor.
+      const radius = 0.85;
+      const proximity = THREE.MathUtils.clamp(1 - distance / radius, 0, 1);
+
+      // Suaviza a borda da área de quebra.
+      const force = proximity * proximity;
+      maxForce = Math.max(maxForce, force);
+
+      // Deslocamento radial, afastando o fragmento do cursor.
+      const direction = new THREE.Vector3(dx, dy, center.z * 0.8 + 0.12);
+
+      if (direction.lengthSq() > 0.0001) {
+        direction.normalize();
       } else {
-        group.current.position.x = viewport.width * 0.28;
-        group.current.position.y = -viewport.height * 0.14;
-        group.current.scale.setScalar(0.58);
+        direction.set(0, 0, 1);
       }
 
-      group.current.rotation.x = s.rx * 0.8;
-      group.current.rotation.y = s.spin + s.ry * 0.8;
-    }
-    shards.forEach((sh, i) => {
-      const g = items.current[i];
-      if (!g) return;
+      // Cada fragmento possui uma resposta ligeiramente diferente.
+      const variation = 0.75 + seeded(i + 91) * 0.5;
+      const distanceOut = force * 1.1 * variation;
 
-      const delay = seeded(i + 37) * 0.18;
-      const fallProgress = THREE.MathUtils.clamp(
-        (progress - delay) / (0.9 - delay),
-        0,
-        1,
+      const baseX = shard.dir.x * shard.amp;
+      const baseY = shard.dir.y * shard.amp;
+      const baseZ = shard.dir.z * shard.amp;
+
+      const targetX = baseX + direction.x * distanceOut;
+      const targetY = baseY + direction.y * distanceOut;
+      const targetZ = baseZ + direction.z * distanceOut;
+
+      // Retorno suave à posição original.
+      const smoothing = 1 - Math.exp(-10 * delta);
+
+      item.position.x = THREE.MathUtils.lerp(
+        item.position.x,
+        targetX,
+        smoothing,
       );
 
-      const eased = fallProgress * (2 - fallProgress);
-      const spread = eased * (0.05 + seeded(i + 81) * 0.22);
-      const isMobile = size.width < 768;
-      const driftScale = isMobile ? 0.6 : 1.0;
-
-      g.position.set(
-        sh.dir.x * (sh.amp + spread),
-        sh.dir.y * (sh.amp + spread) -
-          eased * viewport.height * (0.8 + seeded(i + 12) * 0.4) * driftScale,
-        sh.dir.z * (sh.amp + spread),
+      item.position.y = THREE.MathUtils.lerp(
+        item.position.y,
+        targetY,
+        smoothing,
       );
 
-      g.rotation.set(
-        eased * (seeded(i + 101) - 0.5) * 2.2,
-        eased * (seeded(i + 202) - 0.5) * 2.2,
-        eased * (seeded(i + 303) - 0.5) * 1.6,
+      item.position.z = THREE.MathUtils.lerp(
+        item.position.z,
+        targetZ,
+        smoothing,
+      );
+
+      // Pequena rotação quando o fragmento se desprende.
+      item.rotation.x = THREE.MathUtils.lerp(
+        item.rotation.x,
+        force * (seeded(i + 101) - 0.5) * 1.4,
+        smoothing,
+      );
+
+      item.rotation.y = THREE.MathUtils.lerp(
+        item.rotation.y,
+        force * (seeded(i + 202) - 0.5) * 1.4,
+        smoothing,
+      );
+
+      item.rotation.z = THREE.MathUtils.lerp(
+        item.rotation.z,
+        force * (seeded(i + 303) - 0.5) * 1.2,
+        smoothing,
       );
     });
+
+    explode.current = maxForce;
   });
 
   return (
     <group ref={group}>
-      {shards.map((sh, i) => (
+      {shards.map((shard, i) => (
         <group
           key={i}
-          ref={(el) => {
-            items.current[i] = el;
+          ref={(element) => {
+            items.current[i] = element;
           }}
+          position={[
+            shard.dir.x * shard.amp,
+            shard.dir.y * shard.amp,
+            shard.dir.z * shard.amp,
+          ]}
         >
-          <mesh geometry={sh.geo}>
+          <mesh geometry={shard.geo}>
             <meshStandardMaterial
-              color={sh.gold ? "#D9B25C" : "#5C5043"}
+              color={shard.gold ? "#D9B25C" : "#5C5043"}
               metalness={0.6}
               roughness={0.38}
               side={THREE.DoubleSide}
               flatShading
-              emissive={sh.gold ? "#6B4A14" : "#17130F"}
+              emissive={shard.gold ? "#6B4A14" : "#17130F"}
               emissiveIntensity={0.18}
             />
           </mesh>
 
-          <lineSegments geometry={sh.edges}>
+          <lineSegments geometry={shard.edges}>
             <lineBasicMaterial
-              color={sh.gold ? "#E6C98A" : "#B9A06B"}
+              color={shard.gold ? "#E6C98A" : "#B9A06B"}
               transparent
               opacity={0.8}
             />
@@ -192,7 +252,6 @@ export default function HeroScene({ active }: { active: boolean }) {
         powerPreference: "high-performance",
       }}
       style={{ pointerEvents: "none" }}
-
       frameloop={active ? "always" : "demand"}
       aria-hidden="true"
     >
