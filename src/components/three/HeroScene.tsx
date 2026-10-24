@@ -94,10 +94,14 @@ function Fragments() {
     if (!group.current) return;
 
     const isTablet = size.width < 1024;
-    const scale = isTablet ? 0.42 : 0.58;
+    const scale = isTablet ? 0.42 : 0.70;
 
     // A esfera fica fixa na tela.
-    group.current.position.set(viewport.width * 0.25, 0, 0);
+    group.current.position.set(
+      viewport.width * 0.20, // Mais à esquerda
+      0.2, // Mais para cima
+      0,
+    );
     group.current.scale.setScalar(scale);
     group.current.rotation.set(0, 0, 0);
 
