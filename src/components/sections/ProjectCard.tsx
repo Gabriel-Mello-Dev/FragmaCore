@@ -7,7 +7,10 @@ type ProjectCardProps = {
   headingLevel?: "h3" | "h4";
 };
 
-export function ProjectCard({ project, headingLevel = "h3" }: ProjectCardProps) {
+export function ProjectCard({
+  project,
+  headingLevel = "h3",
+}: ProjectCardProps) {
   const Heading = headingLevel;
 
   return (
@@ -19,8 +22,14 @@ export function ProjectCard({ project, headingLevel = "h3" }: ProjectCardProps) 
             alt={project.imageAlt ?? `Imagem do projeto ${project.title}`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className={`object-cover transition-transform duration-500 group-hover:scale-105 ${
-              project.imagePosition === "top" ? "object-top" : "object-center"
+            className={`transition-transform duration-500 ${
+              project.slug === "cultivis"
+                ? "object-contain object-center p-2"
+                : `object-cover group-hover:scale-105 ${
+                    project.imagePosition === "top"
+                      ? "object-top"
+                      : "object-center"
+                  }`
             }`}
           />
         ) : (
@@ -41,7 +50,9 @@ export function ProjectCard({ project, headingLevel = "h3" }: ProjectCardProps) 
             {categoryLabels[project.category]}
           </p>
           <p className="text-xs text-ash">
-            {project.status === "publicado" ? "Publicado" : "Em desenvolvimento"}
+            {project.status === "publicado"
+              ? "Publicado"
+              : "Em desenvolvimento"}
           </p>
         </div>
 
@@ -49,13 +60,9 @@ export function ProjectCard({ project, headingLevel = "h3" }: ProjectCardProps) 
           {project.title}
         </Heading>
 
-        <p className="mt-3 text-sm leading-6 text-ash">
-          {project.summary}
-        </p>
+        <p className="mt-3 text-sm leading-6 text-ash">{project.summary}</p>
 
-        <p className="mt-4 text-sm text-bone/80">
-          {project.role}
-        </p>
+        <p className="mt-4 text-sm text-bone/80">{project.role}</p>
 
         <div className="mt-4 flex flex-wrap gap-2">
           {project.stack.map((technology) => (
